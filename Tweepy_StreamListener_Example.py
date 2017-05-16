@@ -8,6 +8,7 @@ Set:	list tags1 for firstthing
 Forked from:	 crahal
 Last modified: 	May 2017 by benwhale
 
+Todo: Fix little RT length bug, update to use a 2D array and test
 """
 import tweepy
 from tweepy import OAuthHandler
@@ -29,6 +30,7 @@ from tweepy.streaming import StreamListener
 timestamp_previous= time.strftime("%Y%m%d_%H")
 hourscounter=0
 
+#Could turn this into a 2D array of term and save location
 path1 = 'firstthing\\twitterdata\\main\\'
 path2 = 'secondthing\\twitterdata\\main\\'
 tags1 = ['onething','anotherthing']
@@ -41,7 +43,7 @@ class MyListener(StreamListener):
 		timestamp= time.strftime("%Y%m%d_%H")
 		location=None
 
-
+		#Can replace this with a function which looks through the array and if it finds the search term it stores in the set location
 		if any(tag in status.text for tag in tags1):
 			location= path1
 		if any(tag in status.text for tag in tags2):
@@ -70,7 +72,7 @@ class MyListener(StreamListener):
 twitter_stream = Stream(auth, MyListener())
 while True:
 	try: 
-        	twitter_stream.filter(track=['yourtagone','yourtagtwo','yourtagthree','yourtagfour'])
+        	twitter_stream.filter(track=['yourtagone','yourtagtwo','yourtagthree','yourtagfour']) #This needs updating or generating dynamically
     	except:
         	e = sys.exc_info()[0]
         	print('ERROR:',e) 
